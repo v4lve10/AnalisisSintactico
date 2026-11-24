@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Analizador de errores sintácticos</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+<h1>Analizador de errores sintácticos</h1>
+<p>Escribe o carga tu código fuente. El analizador revisa su estructura, señala cada error con su línea y columna, explica qué esperaba encontrar y, si todo es correcto, dibuja el árbol de sintaxis.</p>
+</header>
+<main>
+<section class="card">
+<h2>Código fuente</h2>
+<div class="bar">
+<button class="main" id="go">Analizar</button>
+<label class="btn">Cargar archivo<input type="file" id="file" accept=".txt,.c,.js,.java,.cpp,.cs,.py,.src,text/*"></label>
+<button id="clr">Limpiar</button>
+</div>
+<textarea id="src" spellcheck="false" placeholder="Escribe o pega aquí tu código fuente (Ctrl + Enter para analizar)."></textarea>
+<details><summary>Gramática que reconoce el analizador</summary><pre>programa    → instrucción*
+instrucción → bloque | declaración «;» | asignación «;»
+            | «if» «(» expr «)» instr [«else» instr]
+            | «while» «(» expr «)» instr
+            | «for» «(» (decl|asig) «;» expr «;» asig «)» instr
+            | «print» «(» args «)» «;» | «return» [expr] «;» | llamada «;»
+bloque      → «{» instrucción* «}»
+declaración → (int|float|string|bool|var|let) ID [«=» expr]
+asignación  → ID «=» expr
+expr        → || · && · == != · &lt; &gt; &lt;= &gt;= · + - · * / % · unario(! -) · primario
+primario    → NUM | CADENA | true | false | ID | ID«(»args«)» | «(» expr «)»</pre></details>
+</section>
+<section class="card" id="out"><h2>Resultado</h2><div class="status warn">Aún no hay análisis. Escribe o carga código y pulsa «Analizar».</div></section>
+</main>
+<script src="main.js"></script>
+</body>
+</html>
